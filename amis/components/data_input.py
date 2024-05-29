@@ -8,7 +8,7 @@ from .data_presentation import Remark, Tpl
 from .feature import Action, Button
 from .types import AmisNode, API, Horizontal, SchemaNode, Template, Validation
 
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 
 class Form(AmisNode):
@@ -26,14 +26,14 @@ class Form(AmisNode):
         actionType: Literal["submit"] = Field(default="submit", init=False)
         componentId: str
 
-    class Messages(TypedDict):
-        fetchSuccess: NotRequired[str]
+    class Messages(TypedDict, total=False):
+        fetchSuccess: str
         """获取成功时提示"""
-        fetchFailed: NotRequired[str]
+        fetchFailed: str
         """获取失败时提示"""
-        saveSuccess: NotRequired[str]
+        saveSuccess: str
         """保存成功时提示"""
-        saveFailed: NotRequired[str]
+        saveFailed: str
         """保存失败时提示"""
 
     type: Literal["form"] = Field(default="form", init=False)
@@ -763,9 +763,9 @@ class ConditionBuilder(FormItem):
 class InputDate(FormItem):
     """日期"""
 
-    class Shortcuts(TypedDict):
-        label: NotRequired[str]
-        date: NotRequired[str]
+    class Shortcuts(TypedDict, total=False):
+        label: str
+        date: str
 
     type: Literal["input-date"] = Field(default="input-date", init=False)
     """指定为 input-date渲染器"""
@@ -783,7 +783,7 @@ class InputDate(FormItem):
     """点选日期后，是否马上关闭选择框"""
     placeholder: str = "请选择日期"
     """占位文本"""
-    shortcuts: Optional[str | List[Shortcuts]] = None
+    shortcuts: Union[str, List[Shortcuts], None] = None
     """日期快捷键"""
     minDate: Optional[str] = None
     """限制最小日期"""
@@ -843,12 +843,12 @@ class InputMonth(FormItem):
 class InputDateRange(FormItem):
     """日期范围"""
 
-    class Shortcuts(TypedDict):
-        label: NotRequired[str]
+    class Shortcuts(TypedDict, total=False):
+        label: str
         """标签"""
-        startDate: NotRequired[str]
+        startDate: str
         """开始日期"""
-        endDate: NotRequired[str]
+        endDate: str
         """结束日期"""
 
     type: Literal["input-date-range"] = Field(default="input-date-range", init=False)
@@ -863,7 +863,7 @@ class InputDateRange(FormItem):
     https://momentjs.com/docs/#/displaying/format/"""
     placeholder: str = "请选择日期范围"
     """占位文本"""
-    shortcuts: Optional[str | List[str] | List[Shortcuts]] = None
+    shortcuts: Union[str, List[str], List[Shortcuts], None] = None
     """日期范围快捷键"""
     minDate: Optional[str] = None
     """限制最小日期时间，用法同 限制范围"""
@@ -949,14 +949,14 @@ class InputKV(FormItem):
 class InputKVS(FormItem):
     """键值对象"""
 
-    class KeyItem(TypedDict):
-        label: NotRequired[str]
+    class KeyItem(TypedDict, total=False):
+        label: str
         """标签"""
-        type: NotRequired[str]
+        type: str
         """类型"""
-        options: NotRequired[OptionsType]
+        options: OptionsType
         """选项"""
-        mode: NotRequired[Literal["horizontal"]]
+        mode: Literal["horizontal"]
         """水平模式"""
 
     type: Literal["input-kvs"] = Field(default="input-kvs", init=False)
@@ -1304,10 +1304,10 @@ class InputImage(FormItem):
 class InputGroup(FormItem):
     """输入框组合"""
 
-    class ValidationConfig(TypedDict):
-        errorMode: NotRequired[Literal["full", "partial"]]
+    class ValidationConfig(TypedDict, total=False):
+        errorMode: Literal["full", "partial"]
         """错误提示风格, full整体飘红, partial仅错误元素飘红"""
-        delimiter: NotRequired[str]
+        delimiter: str
         """单个子元素多条校验信息的分隔符"""
 
     type: Literal["input-group"] = Field(default="input-group", init=False)
@@ -1656,9 +1656,9 @@ class InputRating(FormItem):
 class InputRange(FormItem):
     """滑块"""
 
-    class Value(TypedDict):
-        min: NotRequired[int]
-        max: NotRequired[int]
+    class Value(TypedDict, total=False):
+        min: int
+        max: int
 
     type: Literal["input-range"] = Field(default="input-range", init=False)
     """指定为 input-rang 渲染器"""
@@ -1719,7 +1719,7 @@ class InputRepeat(FormItem):
     placeholder: str = "不重复"
     """当不指定值时的说明。"""
 
-    @validator("options")
+    @field_validator("options")
     def validate_options(cls, v):
         if isinstance(v, list):
             return ",".join(v)
@@ -1752,9 +1752,9 @@ class Select(FormItem):
 
     https://aisuda.bce.baidu.com/amis/zh-CN/components/form/select"""
 
-    class Overlay(TypedDict):
-        width: NotRequired[Union[str, int]]
-        align: NotRequired[Literal["left", "center", "right"]]
+    class Overlay(TypedDict, total=False):
+        width: Union[str, int]
+        align: Literal["left", "center", "right"]
 
     type: Literal["select"] = Field(default="select", init=False)
     """指定为 select 渲染器"""
@@ -1880,10 +1880,10 @@ class InputSubForm(FormItem):
 class Switch(FormItem):
     """开关"""
 
-    class IconSchema(TypedDict):
-        type: NotRequired[Literal["icon"]]
+    class IconSchema(TypedDict, total=False):
+        type: Literal["icon"]
         """指定为图标"""
-        icon: NotRequired[str]
+        icon: str
         """图标"""
 
     type: Literal["switch"] = Field(default="switch", init=False)
@@ -1976,18 +1976,18 @@ class InputTable(FormItem):
         args: Args
 
     class DeleteItemAction(EventAction):
-        class Args(TypedDict):
-            index: NotRequired[str]
-            condition: NotRequired[str]
+        class Args(TypedDict, total=False):
+            index: str
+            condition: str
 
         actionType: Literal["deleteItem"] = Field(default="deleteItem", init=False)
         componentId: str
         groupType: Optional[str] = None
         args: Args
 
-    class Column(TypedDict):
-        quickEdit: NotRequired[Union[bool, DictStrAny]]
-        quickEditOnUpdate: NotRequired[Union[bool, DictStrAny]]
+    class Column(TypedDict, total=False):
+        quickEdit: Union[bool, DictStrAny]
+        quickEditOnUpdate: Union[bool, DictStrAny]
 
     type: Literal["input-table"] = Field(default="input-table", init=False)
     """指定为 input-table 渲染器"""
@@ -2529,12 +2529,12 @@ class JSONSchema(FormItem):
 class JSONSchemaEditor(FormItem):
     """JSON页面编辑器"""
 
-    class Placeholder(TypedDict):
-        key: NotRequired[str]
-        title: NotRequired[str]
-        description: NotRequired[str]
-        default: NotRequired[str]
-        empty: NotRequired[str]
+    class Placeholder(TypedDict, total=False):
+        key: str
+        title: str
+        description: str
+        default: str
+        empty: str
 
     type: Literal["json-schema-editor"] = Field(default="json-schema-editor", init=False)
     """指定为 json-schema-editor 渲染器"""

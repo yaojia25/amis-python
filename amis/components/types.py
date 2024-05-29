@@ -1,5 +1,5 @@
-from typing import List, Literal, Optional, TYPE_CHECKING, TypeAlias, Union
-from typing_extensions import NotRequired, TypedDict
+from typing import List, Literal, Optional, TYPE_CHECKING, Union
+from typing_extensions import TypeAlias, TypedDict
 
 from amis.base import AmisNode, BaseAmisModel
 from amis.typing import DictStrAny, Expression
@@ -17,10 +17,10 @@ class AmisAPI(BaseAmisModel):
 
     link: https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/api"""
 
-    class Messages(TypedDict):
-        success: NotRequired[str]
+    class Messages(TypedDict, total=False):
+        success: str
         """请求成功提示信息"""
-        failed: NotRequired[str]
+        failed: str
         """请求失败提示信息"""
 
     url: Template
@@ -81,63 +81,63 @@ class AmisAPI(BaseAmisModel):
     """
 
 
-class Horizontal(TypedDict):
+class Horizontal(TypedDict, total=False):
     """配置页面占比"""
 
-    left: NotRequired[int]
+    left: int
     """左边 label 的宽度占比"""
-    right: NotRequired[int]
+    right: int
     """右边控制器的宽度占比。"""
-    offset: NotRequired[int]
+    offset: int
     """当没有设置 label 时，右边控制器的偏移量"""
-    justify: NotRequired[bool]
+    justify: bool
     """是否两端对齐"""
 
 
-class Validation(BaseAmisModel):
+class Validation(TypedDict, total=False):
     """值检验"""
 
-    isEmail: Optional[bool] = None
+    isEmail: bool
     """必须是 Email。"""
-    isUrl: Optional[bool] = None
+    isUrl: bool
     """必须是 Url。"""
-    isNumeric: Optional[bool] = None
+    isNumeric: bool
     """必须是 数值。"""
-    isAlpha: Optional[bool] = None
+    isAlpha: bool
     """必须是 字母。"""
-    isAlphanumeric: Optional[bool] = None
+    isAlphanumeric: bool
     """必须是 字母或者数字。"""
-    isInt: Optional[bool] = None
+    isInt: bool
     """必须是 整形。"""
-    isFloat: Optional[bool] = None
+    isFloat: bool
     """必须是 浮点形。"""
-    isLength: Optional[int] = None
+    isLength: int
     """是否长度正好等于设定值。"""
-    minLength: Optional[int] = None
+    minLength: int
     """最小长度。"""
-    maxLength: Optional[int] = None
+    maxLength: int
     """最大长度。"""
-    maximum: Optional[int] = None
+    maximum: int
     """最大值。"""
-    minimum: Optional[int] = None
+    minimum: int
     """最小值。"""
-    equals: Optional[str] = None
+    equals: str
     """当前值必须完全等于 xxx。"""
-    equalsField: Optional[str] = None
+    equalsField: str
     """当前值必须与 xxx 变量值一致。"""
-    isJson: Optional[bool] = None
+    isJson: bool
     """是否是合法的 Json 字符串。"""
-    isUrlPath: Optional[bool] = None
+    isUrlPath: bool
     """是 url 路径。"""
-    isPhoneNumber: Optional[bool] = None
+    isPhoneNumber: bool
     """是否为合法的手机号码"""
-    isTelNumber: Optional[bool] = None
+    isTelNumber: bool
     """是否为合法的电话号码"""
-    isZipcode: Optional[bool] = None
+    isZipcode: bool
     """是否为邮编号码"""
-    isId: Optional[bool] = None
+    isId: bool
     """是否为身份证号码，没做校验"""
-    matchRegexp: Optional[str] = None
+    matchRegexp: str
     """必须命中某个正则。 /foo/"""
 
 

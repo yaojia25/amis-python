@@ -17,23 +17,23 @@ if TYPE_CHECKING:
 class CRUD(AmisNode):
     """增删改查"""
 
-    class Messages(TypedDict):
-        fetchFailed: NotRequired[str]
+    class Messages(TypedDict, total=False):
+        fetchFailed: str
         """获取失败时提示"""
-        saveOrderFailed: NotRequired[str]
+        saveOrderFailed: str
         """保存顺序失败提示"""
-        saveOrderSuccess: NotRequired[str]
+        saveOrderSuccess: str
         """保存顺序成功提示"""
-        quickSaveFailed: NotRequired[str]
+        quickSaveFailed: str
         """快速保存失败提示"""
-        quickSaveSuccess: NotRequired[str]
+        quickSaveSuccess: str
         """快速保存成功提示"""
 
-    class FilterTogglable(TypedDict):
-        label: NotRequired[str]
-        icon: NotRequired[str]
-        activeLabel: NotRequired[str]
-        activeIcon: NotRequired[str]
+    class FilterTogglable(TypedDict, total=False):
+        label: str
+        icon: str
+        activeLabel: str
+        activeIcon: str
 
     type: Literal["crud"] = Field(default="crud", init=False)
     """type 指定为 CRUD 渲染器"""
@@ -59,7 +59,7 @@ class CRUD(AmisNode):
     """设置过滤器默认是否可见。"""
     initFetch: bool = True
     """是否初始化的时候拉取数据, 只针对有 filter 的情况, 没有 filter 初始都会拉取数据"""
-    interval: Optional[int] = Field(ge=1000)
+    interval: Optional[int] = Field(default=None, ge=1000)
     """刷新时间(最低 1000)"""
     silentPolling: bool = False
     """配置刷新时是否隐藏加载动画"""
@@ -166,9 +166,9 @@ class Table(AmisNode):
     class Column(AmisNode):
         """列配置"""
 
-        class Copyable(TypedDict):
-            icon: NotRequired[str]
-            content: NotRequired[str]
+        class Copyable(TypedDict, total=False):
+            icon: str
+            content: str
 
         # type: Optional[str] = None
         # """Literal['text','audio','image','link','tpl','mapping','carousel','date',
@@ -493,9 +493,9 @@ class Carousel(AmisNode):
     class Multiple(TypedDict):
         count: NotRequired[int]
 
-    class Icon(TypedDict):  # TODO 确定类型
-        prev: NotRequired[DictStrAny]
-        next: NotRequired[DictStrAny]
+    class Icon(TypedDict, total=False):  # TODO 确定类型
+        prev: DictStrAny
+        next: DictStrAny
 
     class Options(AmisNode):
         image: Optional[str] = None
@@ -1300,9 +1300,9 @@ class BarCode(AmisNode):
 class Remark(AmisNode):
     """标记"""
 
-    class Content(TypedDict):
-        title: NotRequired[str]
-        body: NotRequired[str]
+    class Content(TypedDict, total=False):
+        title: str
+        body: str
 
     type: Literal["remark"] = Field(default="remark", init=False)
     """remark"""

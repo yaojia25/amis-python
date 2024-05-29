@@ -20,8 +20,6 @@ class Page(AmisNode):
     https://aisuda.bce.baidu.com/amis/zh-CN/components/page
     """
 
-    __default_template_path__: str = "page.jinja2"
-
     type: Literal["page"] = Field(default="page", init=False)
     """指定为 Page 组件"""
     title: Optional[SchemaNode] = None
@@ -66,9 +64,9 @@ class Page(AmisNode):
     """刷新时间(最小 1000)"""
     silentPolling: bool = False
     """配置刷新时是否显示加载动画"""
-    stopAutoRefreshWhen: Expression = ""
+    stopAutoRefreshWhen: Optional[Expression] = None
     """通过表达式来配置停止刷新的条件"""
-    pullRefresh: dict = {"disabled": True}
+    pullRefresh: Optional[DictStrAny] = None
     """下拉刷新配置（仅用于移动端）"""
     onEvent: OnEvent[Literal["init", "inited", "pullRefresh"]] = None
 
@@ -92,7 +90,7 @@ class Page(AmisNode):
             version: amis版本. 默认为 "latest".
             site_title: 网页标题. 默认为 "AMIS".
             site_icon: 网页图标. 默认为 "".
-            theme: 主体. 默认为 "default".
+            theme: 主题. 默认为 "default".
             custom_style: 自定义样式. 默认为 "".
             request_adaptor: 请求适配器. 默认为 "".
             response_adaptor: 接收适配器. 默认为 "".

@@ -432,10 +432,10 @@ class Service(AmisNode):
         url: str
         data: DictStrAny
 
-    class Message(TypedDict):
-        fetchSuccess: NotRequired[str]
+    class Message(TypedDict, total=False):
+        fetchSuccess: str
         """接口请求成功时的 toast 提示文字"""
-        fetchFailed: NotRequired[str]
+        fetchFailed: str
         """接口请求失败时 toast 提示文字"""
 
     type: Literal["service"] = Field(default="service", init=False)

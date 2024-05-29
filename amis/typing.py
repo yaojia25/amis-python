@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, TypeAlias, Union
-from typing_extensions import NotRequired, TypedDict
+from typing import Any, Dict, List, Union
+from typing_extensions import TypeAlias, TypedDict
 
 
-class OptionDict(TypedDict):
-    label: NotRequired[str]
-    value: NotRequired[str]
+class OptionDict(TypedDict, total=False):
+    label: str
+    value: str
 
 
 DictStrAny: TypeAlias = Dict[str, Any]

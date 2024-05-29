@@ -140,7 +140,7 @@ class Badge(AmisNode):
 
     mode: Literal["dot", "text", "ribbon"] = "dot"
     """角标类型，可以是 dot/text/ribbon"""
-    text: Optional[Union[str, int]] = None
+    text: Optional[Union[int, str]] = None
     """角标文案，支持字符串和数字，在mode='dot'下设置无效"""
     size: Optional[int] = None
     """角标大小"""
@@ -284,7 +284,7 @@ class AmisRender(AmisNode):
     """渲染的 schema"""
 
 
-Avatar.update_forward_refs()
+Avatar.model_rebuild()
 
 
 __all__ = [

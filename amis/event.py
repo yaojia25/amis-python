@@ -1,5 +1,4 @@
 from typing import Any, Dict, List, Literal, Optional, TYPE_CHECKING, TypeVar, Union
-from typing_extensions import NotRequired, TypedDict
 
 from amis.typing import DictStrAny
 
@@ -16,7 +15,7 @@ T = TypeVar("T", bound=str)
 class EventAction(BaseAmisModel):
     actionType: str
     """动作名称"""
-    args: Optional[Dict[str, Any]] = None
+    args: Optional[Dict[str, Any]]
     """动作参数{key:value}，支持数据映射"""
     data: Optional[Dict[str, Any]] = None
     """追加数据{key:value}，支持数据映射，如果是触发其他组件
@@ -79,9 +78,9 @@ class CloseDrawerAction(EventAction):
     componentId: str
 
 
-class CommonDialog(TypedDict):
-    title: NotRequired[str]
-    msg: NotRequired[str]
+class CommonDialog(BaseAmisModel):
+    title: Optional[str] = None
+    msg: Optional[str] = None
 
 
 class ConfirmDialogAction(EventAction):
@@ -97,19 +96,19 @@ class AlertAction(EventAction):
 
 
 class UrlAction(EventAction):
-    class UrlArgs(TypedDict):
+    class UrlArgs(BaseAmisModel):
         url: str
-        blank: NotRequired[bool]
-        params: NotRequired[DictStrAny]
+        blank: Optional[bool] = None
+        params: Optional[DictStrAny] = None
 
     actionType: Literal["url"] = Field(default="url", init=False)
     args: Union[UrlArgs, DictStrAny]
 
 
 class LinkAction(EventAction):
-    class LinkArgs(TypedDict):
+    class LinkArgs(BaseAmisModel):
         link: str
-        params: NotRequired[DictStrAny]
+        params: Optional[DictStrAny] = None
 
     actionType: Literal["link"] = Field(default="link", init=False)
     args: LinkArgs
@@ -120,7 +119,7 @@ class GoBackAction(EventAction):
 
 
 class GoPageAction(EventAction):
-    class GoPageArgs(TypedDict):
+    class GoPageArgs(BaseAmisModel):
         delta: int
 
     actionType: Literal["goPage"] = Field(default="goPage", init=False)
@@ -132,10 +131,10 @@ class RefreshAction(EventAction):
 
 
 class ToastAction(EventAction):
-    class ToastArgs(TypedDict):
-        msgType: NotRequired[Literal["info", "success", "error", "warning"]]
+    class ToastArgs(BaseAmisModel):
+        msgType: Optional[Literal["info", "success", "error", "warning"]] = None
         msg: str
-        position: NotRequired[
+        position: Optional[
             Literal[
                 "top-right",
                 "top-center",
@@ -145,18 +144,18 @@ class ToastAction(EventAction):
                 "bottom-right",
                 "center",
             ]
-        ]
-        closeButton: NotRequired[bool]
-        showIcon: NotRequired[bool]
-        timeout: NotRequired[int]
+        ] = None
+        closeButton: Optional[bool] = None
+        showIcon: Optional[bool] = None
+        timeout: Optional[int] = None
 
     actionType: Literal["toast"] = Field(default="toast", init=False)
     args: ToastArgs
 
 
 class CopyAction(EventAction):
-    class CopyArgs(TypedDict):
-        copyFormat: NotRequired[str]
+    class CopyArgs(BaseAmisModel):
+        copyFormat: Optional[str] = None
         content: "Template"
 
     actionType: Literal["copy"] = Field(default="copy", init=False)
@@ -164,16 +163,16 @@ class CopyAction(EventAction):
 
 
 class EmailAction(EventAction):
-    class EmailArgs(TypedDict):
-        to: NotRequired[str]
+    class EmailArgs(BaseAmisModel):
+        to: Optional[str] = None
         """收件人邮箱"""
-        cc: NotRequired[str]
+        cc: Optional[str] = None
         """抄送邮箱"""
-        bcc: NotRequired[str]
+        bcc: Optional[str] = None
         """匿名抄送邮箱"""
-        subject: NotRequired[str]
+        subject: Optional[str] = None
         """邮件主题"""
-        body: NotRequired[str]
+        body: Optional[str] = None
         """邮件正文"""
 
     actionType: Literal["email"] = Field(default="email", init=False)
@@ -218,10 +217,10 @@ class NoStaticAction(EventAction):
 
 
 class SetValueAction(EventAction):
-    class SetValueArgs(TypedDict):
+    class SetValueArgs(BaseAmisModel):
         value: Any
         """值"""
-        index: NotRequired[int]
+        index: Optional[int] = None
         """当目标组件是combo时，可以指定更新的数据索引"""
 
     actionType: Literal["setValue"] = Field(default="setValue", init=False)
@@ -241,7 +240,7 @@ class CustomAction(EventAction):
 
 
 class BroadcastAction(EventAction):
-    class Args(TypedDict):
+    class Args(BaseAmisModel):
         eventName: str
         """广播动作对应的自定义事件名称，用于广播事件的监听"""
 
@@ -253,7 +252,7 @@ class BroadcastAction(EventAction):
 
 
 class LoopAction(EventAction):
-    class LoopArgs(TypedDict):
+    class LoopArgs(BaseAmisModel):
         loopName: str
 
     actionType: Literal["loop"] = Field(default="loop", init=False)
@@ -339,10 +338,10 @@ class PrevAction(EventAction):
     actionType: Literal["prev"] = Field(default="prev", init=False)
 
 
-class Event(TypedDict):
+class Event(BaseAmisModel):
     actions: List[EventAction]
     """动作列表"""
-    weight: NotRequired[int]
+    weight: Optional[int] = None
     """仅在少数组件有用，未知作用"""
 
 

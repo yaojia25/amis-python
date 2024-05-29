@@ -14,20 +14,11 @@ packages = [{ include = "amis" }]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pydantic = "^1.9.2"
+pydantic = "^2.7.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.277"
-black = "^23.1.0"
+ruff = "^0.1.15"
 pre-commit = "^3.1.0"
-
-[tool.black]
-line-length = 120
-include = '\.pyi?$'
-extend-exclude = '''
-'''
-skip-string-normalization = true
-target-version = ["py38", "py39", "py310", "py311"]
 
 [tool.ruff]
 select = [
@@ -73,6 +64,13 @@ section-order = [
 ignore-overlong-task-comments = true
 max-doc-length = 120
 
+[tool.pyright]
+pythonVersion = "3.8"
+pythonPlatform = "All"
+defineConstant = { PYDANTIC_V2 = true }
+typeCheckingMode = "basic"
+reportShadowedImports = false
+disableBytesTypePromotions = true
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

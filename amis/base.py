@@ -1,23 +1,21 @@
 from typing import Optional
 
 from amis.typing import DictStrAny, Expression
-from amis.utils import json_dumps, json_loads
 
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, ConfigDict
 
 
 class BaseAmisModel(BaseModel):
-    class Config:
-        validate_assignment = True
-        extra = Extra.allow
-        json_loads = json_loads
-        json_dumps = json_dumps
+    model_config = ConfigDict(
+        validate_assignment=True,
+        extra="allow",
+    )
 
     def to_json(self):
-        return self.json(exclude_none=True, by_alias=True)
+        return self.model_dump_json(exclude_none=True, by_alias=True)
 
     def to_dict(self):
-        return self.dict(exclude_none=True, by_alias=True)
+        return self.model_dump(exclude_none=True, by_alias=True)
 
     def update_from_dict(self, kwargs: DictStrAny):
         for k, v in kwargs.items():
