@@ -1,0 +1,23 @@
+name: Ruff Lint
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - "amis/**"
+
+  pull_request:
+    paths:
+      - "amis/**"
+
+jobs:
+  ruff:
+    name: Ruff Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Ruff Lint
+        uses: chartboost/ruff-action@v1
