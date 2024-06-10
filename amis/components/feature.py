@@ -396,7 +396,7 @@ class DropDownButton(AmisNode):
     """尺寸"""
     align: Optional[Literal["left", "right"]] = None
     """位置"""
-    buttons: List[Union[Button, ButtonGroup]] = []
+    buttons: List[Union[Button, ButtonGroup, Action]] = []
     """配置下拉按钮"""
     iconOnly: Optional[bool] = None
     """只显示icon"""

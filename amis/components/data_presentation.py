@@ -7,6 +7,7 @@ from amis.typing import DataMapping, DictStrAny, Expression
 from .types import AmisNode, API, SchemaNode, Template
 
 from pydantic import Field
+from .feature import DropDownButton
 
 if TYPE_CHECKING:
     from .data_input import Form
@@ -431,7 +432,7 @@ class Card(AmisNode):
     "Card 多媒体部内容设置"
     secondary: Optional[Template] = None
     """次要说明"""
-    toolbar: Optional[List["Action"]] = None
+    toolbar: Optional[List[Union["Action", "DropDownButton"]]] = None
     """工具栏按钮"""
     dragging: bool = False
     """是否显示拖拽图标"""
@@ -679,7 +680,7 @@ class Each(AmisNode):
     """获取数据域中变量"""
     source: Optional[str] = None
     """获取数据域中变量， 支持 数据映射"""
-    items: Optional[DictStrAny] = None
+    items: Optional[Union[DictStrAny, "Tpl"]] = None
     """使用value中的数据，循环输出渲染器。"""
     placeholder: Optional[str] = None
     """当 value 值不存在或为空数组时的占位文本"""
