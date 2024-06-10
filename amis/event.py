@@ -15,7 +15,7 @@ T = TypeVar("T", bound=str)
 class EventAction(BaseAmisModel):
     actionType: str
     """动作名称"""
-    args: Optional[Dict[str, Any]]
+    args: Optional[Dict[str, Any]] = None
     """动作参数{key:value}，支持数据映射"""
     data: Optional[Dict[str, Any]] = None
     """追加数据{key:value}，支持数据映射，如果是触发其他组件

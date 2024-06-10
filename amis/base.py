@@ -29,7 +29,7 @@ class BaseAmisModel(BaseModel):
 class AmisNode(BaseAmisModel):
     """组件配置"""
 
-    type: str
+    type: Optional[str] = None
     """组件类型"""
     visible: Optional[bool] = None
     """是否显示，True为显示,False为隐藏，默认为True"""
