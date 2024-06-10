@@ -1961,6 +1961,12 @@ class Static(FormItem):
         originalSrc: Optional[str] = None
         """大图地址"""
 
+    class Tpl(FormItem):
+        type: Literal["static-tpl"] = Field(default="static-tpl", init=False)
+        """模板"""
+        tpl: Optional[str] = None
+        """模板配置"""
+
 
 class InputTable(FormItem):
     """表格"""
