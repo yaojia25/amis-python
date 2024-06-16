@@ -1,10 +1,10 @@
-from typing import Dict, Any, Union, List, Literal
+from typing import Any, Dict, List, Literal, Union
 
 try:
     import ujson as json
 except ImportError:
     import json
-from pydantic import BaseModel, Extra
+from pydantic.v1 import BaseModel, Extra
 
 Expression = str
 Template = Union[str, "Tpl", dict]
@@ -35,9 +35,10 @@ class BaseAmisModel(BaseModel):
 
 class BaseAmisApiOut(BaseAmisModel):
     """api接口输出数据格式"""
+
     status: int = 0
     """状态码，0代表成功，其他代表失败"""
-    msg: str = ''
+    msg: str = ""
     """提示信息"""
     data: dict = None
     """回传数据"""
@@ -45,6 +46,7 @@ class BaseAmisApiOut(BaseAmisModel):
 
 class AmisNode(BaseAmisModel):
     """组件配置"""
+
     type: str = None
     """组件类型"""
     visible: bool = None
@@ -78,7 +80,7 @@ class AmisAPI(BaseAmisModel):
     - 当 data 中包含文件时，自动会采用 form-data（multipart/form-data） 格式。
     - 当配置为 form 时为 application/x-www-form-urlencoded 格式
     """
-    qsOptions: Union[str, dict] ={ "arrayFormat": 'indices', "encodeValuesOnly": True }
+    qsOptions: Union[str, dict] = {"arrayFormat": "indices", "encodeValuesOnly": True}
     """
     - 当 dataType 为 form 或者 form-data 的时候有用
     - 具体参数请参考这里，默认设置为: { arrayFormat: 'indices', encodeValuesOnly: true }
